@@ -1,0 +1,1 @@
+//Milczenie jest złotem
