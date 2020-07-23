@@ -1,1 +1,2 @@
-//Milczenie jest złotem
+<?php
+//He he IKS DE
