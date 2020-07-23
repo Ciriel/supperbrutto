@@ -1,58 +1,45 @@
 <?php
 	session_start();
 	
-	if(isset($_POST['netto'])) 
-	{
+	if(isset($_POST['netto'])) 	{
 		$netto = $_POST['netto'];
 		$_SESSION['$m_netto'] = $netto;
 	}
 	else $netto = 0;
 	
-	if(isset($_POST['brutto'])) 
-	{
+	if(isset($_POST['brutto'])) {
 		$brutto = $_POST['brutto'];
 		$_SESSION['$m_brutto'] = $brutto;
 	}
 	else $brutto = 0;
 	
-	if(isset($_POST['umowa'])) 
-	{
+	if(isset($_POST['umowa'])) {
 		$umowa = $_POST['umowa'];
-		if($umowa == 1)
-		{
-			if(isset($_POST['wiek']))
-			{	
+		if($umowa == 1) {
+			if(isset($_POST['wiek'])) {
 				$pit = 0;
 			}
-			else
-			{
-				if($brutto<=200)
-				{
+			else {
+				if($brutto<=200) {
 					$pit=$brutto*0.18;
 					$netto = $brutto - $pit;
 					$sumapit = $pit;			
 				}
-				else
-				{
-					if(isset($_POST['prawaAutorskie']))
-					{
+				else {
+					if(isset($_POST['prawaAutorskie'])) {
 						$kosztup = $brutto/2; //koszt uzyskania przychodu
 					}
-					else
-					{
+					else {
 						$kosztup = $brutto/5;
 					}
 						
-					if(($brutto - $kosztup)<=85528) 
-					{
+					if(($brutto - $kosztup)<=85528) {
 						$pit = (($brutto - $kosztup)*0.17)-(525.12/12);
 					}
-					if(85528<($brutto - $kosztup) && ($brutto - $kosztup)<=127000)
-					{
+					if(85528<($brutto - $kosztup) && ($brutto - $kosztup)<=127000) {
 						$pit = (($brutto - $kosztup)*0.32)-(525.12 - 525.12*(($brutto - $kosztup) - 85528)/41742);
 					}
-					if(($brutto - $kosztup)>127000)
-					{
+					if(($brutto - $kosztup)>127000) {
 						$pit = (($brutto - $kosztup)*0.32);
 					}
 				}
@@ -60,56 +47,45 @@
 			$netto = $brutto - $pit  /*f*/;
 			$sumapit = $pit;
 		}
-		if($umowa == 2)
-		{
-			if(isset($_POST['skladki']))
-			{
+		if($umowa == 2) {
+			if(isset($_POST['skladki'])) {
 				$p_ub_emeryt = $brutto*0.0976; //ubezpieczenie emerytalne
 				$p_ub_rentowe = $brutto*0.015; //ubezpieczenie rentowe
 				$p_ub_chorobowe = $brutto*0.0245; //ubezpieczenie chorobowe
 			}
-			else
-			{
+			else {
 				$p_ub_emeryt = 0; //ubezpieczenie emerytalne
 				$p_ub_rentowe = 0; //ubezpieczenie rentowe
 				$p_ub_chorobowe = 0; //ubezpieczenie chorobowe
 			}
-			$suma_składek = $p_ub_emeryt + $p_ub_rentowe + $p_ub_chorobowe;
-			$p_ub_zdrowotne = ($brutto - $suma_składek)*0.09;
+			$suma_skladek = $p_ub_emeryt + $p_ub_rentowe + $p_ub_chorobowe;
+			$p_ub_zdrowotne = ($brutto - $suma_skladek)*0.09;
 
-			if(isset($_POST['wiek']))
-			{
+			if(isset($_POST['wiek'])) {
 				$pit = 0;
 			}
-			else
-			{
-				if(isset($_POST['prawaAutorskie']))
-				{
-					$kosztup = ($brutto - $suma_składek)/2; //koszt uzyskania przychodu
+			else {
+				if(isset($_POST['prawaAutorskie'])) {
+					$kosztup = ($brutto - $suma_skladek)/2; //koszt uzyskania przychodu
 				}
-				else
-				{
-					$kosztup = ($brutto - $suma_składek)/5;
+				else {
+					$kosztup = ($brutto - $suma_skladek)/5;
 				}
 					
-				if(($brutto - $suma_składek - $kosztup)<=85528) 
-				{
-					$pit = (($brutto - $suma_składek - $kosztup)*0.17)-(525.12/12);
+				if(($brutto - $suma_skladek - $kosztup)<=85528) {
+					$pit = (($brutto - $suma_skladek - $kosztup)*0.17)-(525.12/12);
 				}
-				if(85528<($brutto - $suma_składek - $kosztup) && ($brutto - $suma_składek - $kosztup)<=127000)
-				{
-					$pit = (($brutto - $suma_składek - $kosztup)*0.32)-(525.12 - 525.12*(($brutto - $suma_składek - $kosztup) - 85528)/41742);
+				if(85528<($brutto - $suma_skladek - $kosztup) && ($brutto - $suma_skladek - $kosztup)<=127000) {
+					$pit = (($brutto - $suma_skladek - $kosztup)*0.32)-(525.12 - 525.12*(($brutto - $suma_skladek - $kosztup) - 85528)/41742);
 				}
-				if(($brutto - $suma_składek - $kosztup)>127000)
-				{
-					$pit = (($brutto - $suma_składek - $kosztup)*0.32);
+				if(($brutto - $suma_skladek - $kosztup)>127000) {
+					$pit = (($brutto - $suma_skladek - $kosztup)*0.32);
 				}
 			}
-			$netto = $brutto - $suma_składek - (($brutto - $suma_składek)*0.09) /*e*/ - ($pit - ($brutto - $suma_składek)*0.0775) /*f*/;
-			$sumapit = $pit - ($brutto - $suma_składek)*0.0775;
+			$netto = $brutto - $suma_skladek - (($brutto - $suma_skladek)*0.09) /*e*/ - ($pit - ($brutto - $suma_skladek)*0.0775) /*f*/;
+			$sumapit = $pit - ($brutto - $suma_skladek)*0.0775;
 		}
-		if($umowa == 3)
-		{
+		if($umowa == 3) {
 		//koszty pracodawcy
 		$pd_ub_emeryt = $brutto*0.0976; //ubezpieczenie emerytalne
 		$pd_ub_rentowe = $brutto*0.065; //ubezpieczenie rentowe
@@ -124,33 +100,27 @@
 		$p_ub_emeryt = $brutto*0.0976; //ubezpieczenie emerytalne
 		$p_ub_rentowe = $brutto*0.015; //ubezpieczenie rentowe
 		$p_ub_chorobowe = $brutto*0.0245; //ubezpieczenie chorobowe
-		$suma_składek = $p_ub_emeryt + $p_ub_rentowe + $p_ub_chorobowe; //c
-		$p_ub_zdrowotne = ($brutto - $suma_składek)*0.09; //ubezpieczenie zdrowotne //e
-		if(isset($_POST['wiek']))
-		{
+		$suma_skladek = $p_ub_emeryt + $p_ub_rentowe + $p_ub_chorobowe; //c
+		$p_ub_zdrowotne = ($brutto - $suma_skladek)*0.09; //ubezpieczenie zdrowotne //e
+		if(isset($_POST['wiek'])) {
 			$pit = 0;
 		}
-		else
-		{
-		if(($brutto - $suma_składek - 250)<=85528) 
-		{
-			$pit = (($brutto - $suma_składek - 250)*0.17)-(525.12/12);
+		else {
+            if(($brutto - $suma_skladek - 250)<=85528) {
+                $pit = (($brutto - $suma_skladek - 250)*0.17)-(525.12/12);
+            }
+            if(85528<($brutto - $suma_skladek - 250) && ($brutto - $suma_skladek - 250)<=127000) {
+                $pit = (($brutto - $suma_skladek - 250)*0.32)-(525.12 - 525.12*(($brutto - $suma_skladek - 250) - 85528)/41742);
+            }
+            if(($brutto - $suma_skladek - 250)>127000) {
+                $pit = (($brutto - $suma_skladek - 250)*0.32);
+            }
 		}
-		if(85528<($brutto - $suma_składek - 250) && ($brutto - $suma_składek - 250)<=127000)
-		{
-			$pit = (($brutto - $suma_składek - 250)*0.32)-(525.12 - 525.12*(($brutto - $suma_składek - 250) - 85528)/41742);
-		}
-		if(($brutto - $suma_składek - 250)>127000)
-		{
-			$pit = (($brutto - $suma_składek - 250)*0.32);
-		}
-		}
-		$netto = $brutto/*a*/ - $suma_składek/*c*/ - (($brutto - $suma_składek)*0.09) /*e*/ - ($pit - ($brutto - $suma_składek)*0.0775) /*f*/;
-		$sumapit = $pit - ($brutto - $suma_składek)*0.0775;
+		$netto = $brutto/*a*/ - $suma_skladek/*c*/ - (($brutto - $suma_skladek)*0.09) /*e*/ - ($pit - ($brutto - $suma_skladek)*0.0775) /*f*/;
+		$sumapit = $pit - ($brutto - $suma_skladek)*0.0775;
 		}
 	}
-	if(!isset($_POST['umowa'])) 
-	{
+	if(!isset($_POST['umowa'])) {
 		$umowa = 0;
 	}
 	/*
@@ -171,100 +141,83 @@
     <meta name="keywords" content="php, kurs, PDO, połączenie, MySQL">
     <meta http-equiv="X-Ua-Compatible" content="IE=edge">
 
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="assets/main.css">
     <link href="https://fonts.googleapis.com/css?family=Lobster|Open+Sans:400,700&amp;subset=latin-ext" rel="stylesheet">
-    <!--[if lt IE 9]>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <![endif]-->
+    <!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script><![endif]-->
 </head>
 
 <body>
     <div class="container">
 
         <header>
-            <h1>Kalkulator superbrutto</h1>
+            <h1>Kalkulator Superbrutto</h1>
         </header>
 
         <main>
             <article>
                 <form>
 					<?php
-						if(isset($superbrutto))
-						{
+						if(isset($superbrutto)) {
 							echo "superbrutto: ".$superbrutto;
 							echo "<br>";
 						}
-						if(isset($pd_ub_emeryt))
-						{
+						if(isset($pd_ub_emeryt)) {
 							echo "ubezpieczenie emerytalne: ".$pd_ub_emeryt;
 							echo "<br>";
 						}
-						if(isset($pd_ub_rentowe))
-						{
-					    echo "ubezpieczenie rentowe: ".$pd_ub_rentowe;
-						echo "<br>";
+						if(isset($pd_ub_rentowe)) {
+                            echo "ubezpieczenie rentowe: ".$pd_ub_rentowe;
+                            echo "<br>";
 						}
-						if(isset($pd_ub_wypadkowe))
-						{
-					    echo "ubezpieczenie wypadkowe: ".$pd_ub_wypadkowe;
-						echo "<br>";
+						if(isset($pd_ub_wypadkowe)) {
+                            echo "ubezpieczenie wypadkowe: ".$pd_ub_wypadkowe;
+                            echo "<br>";
 						}
-						if(isset($pd_Fun_Pracy))
-						{
-					    echo "fundusz pracy: ".$pd_Fun_Pracy;
-						echo "<br>";
+						if(isset($pd_Fun_Pracy)) {
+                            echo "fundusz pracy: ".$pd_Fun_Pracy;
+                            echo "<br>";
 						}
-						if(isset($pd_FGSP))
-						{
-					    echo "FGŚP: ".$pd_FGSP;
-						echo "<br>";
+						if(isset($pd_FGSP)) {
+                            echo "FGŚP: ".$pd_FGSP;
+                            echo "<br>";
 						}
-						if(isset($brutto))
-						{
-						echo "brutto: ".$brutto;
-						echo "<br>";
+						if(isset($brutto)) {
+                            echo "brutto: ".$brutto;
+                            echo "<br>";
 						}
-						if(isset($p_ub_emeryt))
-						{
-						echo "ubezpieczenie emerytalne: ".$p_ub_emeryt;
-						echo "<br>";
+						if(isset($p_ub_emeryt)) {
+                            echo "ubezpieczenie emerytalne: ".$p_ub_emeryt;
+                            echo "<br>";
 						}
-						if(isset($p_ub_rentowe))
-						{
-					    echo "ubezpieczenie rentowe: ".$p_ub_rentowe;
-						echo "<br>";
+						if(isset($p_ub_rentowe)) {
+                            echo "ubezpieczenie rentowe: ".$p_ub_rentowe;
+                            echo "<br>";
 						}
-						if(isset($p_ub_chorobowe))
-						{
-					    echo "ubezpieczenie chorobowe: ".$p_ub_chorobowe;
-						echo "<br>";
+						if(isset($p_ub_chorobowe)) {
+                            echo "ubezpieczenie chorobowe: ".$p_ub_chorobowe;
+                            echo "<br>";
 						}
-						if(isset($suma_składek))
-						{
-						echo "suma składek: ".$suma_składek;
-						echo "<br>";
+						if(isset($suma_skladek)) {
+                            echo "suma składek: ".$suma_skladek;
+                            echo "<br>";
 						}
-						if(isset($p_ub_zdrowotne))
-						{
-					    echo "ubezpieczenie zdrowotne: ".$p_ub_zdrowotne;
-						echo "<br>";
+						if(isset($p_ub_zdrowotne)) {
+                            echo "ubezpieczenie zdrowotne: ".$p_ub_zdrowotne;
+                            echo "<br>";
 						}
-						if(isset($sumapit))
-						{
-						echo "zaliczka na pit: ".$sumapit;
-						echo "<br>";
+						if(isset($sumapit)) {
+                            echo "zaliczka na pit: ".$sumapit;
+                            echo "<br>";
 						}
-						if(isset($netto))
-						{
-						echo "netto: ".$netto;
+						if(isset($netto)) {
+                            echo "netto: ".$netto;
 						}
 					?>
 					<br>
-					<a href="index.php">Wróc do początku</a>
+					<a href="main.php">Wróć do początku</a>
                 </form>
             </article>
         </main>
-
     </div>
 </body>
 </html>
