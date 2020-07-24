@@ -1,12 +1,13 @@
 <?php
 
 /**
- * @package Supperbrutto
+ * @package supperbrutto
  */
 
-class SupperbruttoActivate {
+namespace Inc\Base;
+
+class Activate {
     public static function activate() {
         flush_rewrite_rules();
-
     }
 }
