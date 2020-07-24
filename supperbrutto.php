@@ -29,26 +29,20 @@ You should have received a copy of the GNU General Public License along with thi
 If not, see <https://www.gnu.org/licenses/>.
 */
 
-use Inc\Base\Activate;
-use Inc\Base\Deactivate;
-
 defined('ABSPATH') or die('You shall not pass!');
 
 if(file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
     require_once dirname(__FILE__) . '/vendor/autoload.php';
 }
 
-//define CONSTANTS
-define('PLUGIN_PATH', plugin_dir_path(__FILE__));
-define('PLUGIN_URL', plugin_dir_url(__FILE__));
-define('PLUGIN', plugin_basename(__FILE__));
+
 
 function activate_supperbrutto() {
-    Activate::activate();
+    Inc\Base\Activate::activate();
 }
 
 function deactivate_supperbrutto() {
-    Deactivate::deactivate();
+    Inc\Base\Deactivate::deactivate();
 }
 
 register_activation_hook(__FILE__, 'activate_supperbrutto');

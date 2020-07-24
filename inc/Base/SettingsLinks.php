@@ -6,15 +6,11 @@
  */
 
 namespace Inc\Base;
+use \Inc\Base\BaseController;
 
-class SettingsLinks {
-    protected $plugin;
-    public function __construct() {
-        $this -> plugin = PLUGIN;
-    }
-
+class SettingsLinks extends BaseController {
     public function register() {
-        add_filter("plugin_action_links_".PLUGIN, array($this, 'settings_lins'));
+        add_filter("plugin_action_links_$this->plugin", array($this, 'settings_lins'));
     }
 
     public function settings_lins($links) {
