@@ -1,0 +1,19 @@
+{
+    "name": "lenovo/supperbrutto",
+    "description": "Kalkulator obliczajacy superbrutto, brutto, netto oraz skladki pracownika i pracodawcy.",
+    "type": "project",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "speedy",
+            "email": "k.w1@o2.pl"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Inc\\": "./inc"
+        }
+    }
+}

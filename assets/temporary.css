@@ -1,0 +1,9 @@
+.hello {
+	font-family: 'Open Sans', cursive;
+	font-size: 50px;
+	font-weight: 400;
+	text-align: center;
+	letter-spacing: 3px;
+	margin-top: 0;
+	margin-bottom: 20px;
+}

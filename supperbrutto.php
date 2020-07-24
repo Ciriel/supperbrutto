@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Supperbrutto
+ * @package supperbrutto
  */
 /*
 Plugin Name: Superbrutto
@@ -29,63 +29,31 @@ You should have received a copy of the GNU General Public License along with thi
 If not, see <https://www.gnu.org/licenses/>.
 */
 
+use Inc\Base\Activate;
+use Inc\Base\Deactivate;
+
 defined('ABSPATH') or die('You shall not pass!');
 
-class SuperClass {
-    public $plugin_name;
-
-    public function __construct() {
-        $this->plugin_name = plugin_basename(__FILE__);
-    }
-
-    function register() {
-        add_action('admin_enqueue_scripts', array($this, 'enqueue'));
-
-        add_action('admin_menu', array($this, 'add_admin_pages'));
-
-        add_filter("plugin_action_links_$this->plugin_name", array($this, 'settings_link'));
-    }
-
-    public function settings_link($links) {
-        // add custom settings link
-        $settings_link = '<a href="admin.php?page=supperbrutto">Settings</a>';
-        array_push($links, $settings_link);
-        return $links;
-    }
-
-    public function add_admin_pages() {
-        add_menu_page( 'SupperBrutto', 'SupperBrutto', 'manage_options',
-            'supperbrutto', array($this, 'admin_index'), 'dashicons-money', 110 );
-    }
-
-    public function admin_index() {
-        require_once plugin_dir_path(__FILE__). 'templates/admin.php';
-    }
-    function uninstall() {
-        //delete a CPT
-        //delete all data from DB
-    }
-
-    function enqueue() {
-        //enqueue all scripts
-        wp_enqueue_style( 'mypluginstyle', plugins_url('/assets/main.css'),__FILE__);
-        wp_enqueue_script( 'mypluginstyle', plugins_url('/assets/main.js'),__FILE__);
-    }
-
-    function activate() {
-        require_once plugin_dir_path(__FILE__). 'inc/supperbrutto-activate.php';
-        SupperbruttoActivate::activate();
-    }
+if(file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
+    require_once dirname(__FILE__) . '/vendor/autoload.php';
 }
 
-if(class_exists('SuperClass')) {
-    $supper_class = new SuperClass();
-    $supper_class -> register();
+//define CONSTANTS
+define('PLUGIN_PATH', plugin_dir_path(__FILE__));
+define('PLUGIN_URL', plugin_dir_url(__FILE__));
+define('PLUGIN', plugin_basename(__FILE__));
+
+function activate_supperbrutto() {
+    Activate::activate();
 }
 
-//activation
-register_activation_hook( __FILE__, array($supper_class, 'activate') );
+function deactivate_supperbrutto() {
+    Deactivate::deactivate();
+}
 
-//deactivation
-require_once plugin_dir_path(__FILE__). 'inc/supperbrutto-deactivate.php';
-register_deactivation_hook( __FILE__, array('SupperbruttoDeactivate', 'deactivate') );
+register_activation_hook(__FILE__, 'activate_supperbrutto');
+register_deactivation_hook(__FILE__, 'deactivate_supperbrutto');
+
+if (class_exists('Inc\\Init')) {
+    Inc\Init::register_services();
+}
