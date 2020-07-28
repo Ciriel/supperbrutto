@@ -1,6 +1,8 @@
 <div class="wrap">
     <?php settings_errors(); ?>
 
+    <h1 class="hello">Hello!</h1>
+
     <ul class="nav nav-tabs">
         <li class="active"><a href="#tab-1">Manage Settings</a> </li>
         <li><a href="#tab-2">Updates</a></li>
@@ -11,7 +13,7 @@
         <div id="tab-1" class="tab-pane active">
             <form method="post" action="options.php">
                 <?php
-                    settings_fields('supperbrutto_options_group');
+                    settings_fields('supperbrutto_settings');
                     do_settings_sections('supperbrutto');
                     submit_button();
                 ?>
@@ -24,5 +26,5 @@
             <h3>About</h3>
         </div>
     </div>
-    <h1 class="hello">Hello!</h1>
+
 </div>

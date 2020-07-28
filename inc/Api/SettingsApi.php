@@ -34,9 +34,9 @@ class SettingsApi {
 
         $subpage = [
             [
+                'menu_title' => ($title) ? $title : $admin_page['menu_title'],
                 'parent_slug' => $admin_page['parent_slug'],
                 'page_title' => $admin_page['page_title'],
-                'menu_title' => ($title) ? $title : $admin_page['menu_title'],
                 'capability' => $admin_page['capability'],
                 'menu_slug' => $admin_page['menu_slug'],
                 'callback' => $admin_page['callback']
